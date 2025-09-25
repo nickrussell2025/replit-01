@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>GameBoy Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+        
+        :root {
+            --gb-dark: #0f380f;
+            --gb-light: #8bac0f;
+            --gb-lightest: #9bbc0f;
+            --gb-bg: #c7d0cc;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #222;
+            font-family: 'VT323', monospace;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+        
+        .gameboy {
+            width: 300px;
+            height: 500px;
+            background: var(--gb-bg);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .screen {
+            width: 100%;
+            flex: 3;
+            background: var(--gb-dark);
+            border: 3px solid #333;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gb-lightest);
+            font-size: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .screen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent 50%, rgba(0,0,0,0.3) 50%);
+            background-size: 100% 2px;
+            animation: scanlines 0.1s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes scanlines {
+            to { transform: translateY(2px); }
+        }
+        
+        .number {
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { 
+                text-shadow: 0 0 8px var(--gb-lightest);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 12px var(--gb-lightest),
+                    0 0 20px var(--gb-lightest),
+                    0 0 30px var(--gb-light);
+            }
+        }
+        
+        .button {
+            width: 80px;
+            height: 80px;
+            flex: none;
+            background: linear-gradient(145deg, #666, #444);
+            border: 3px solid #333;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        
+        .button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="gameboy">
+        <div class="screen">
+            <span class="number" id="screen">0</span>
+        </div>
+        <button class="button" onclick="increment()">+</button>
+    </div>
+
+    <script>
+        let value = 0;
+        
+        function increment() {
+            value++;
+            document.getElementById('screen').textContent = value;
+        }
+    </script>
+</body>
+</html>
